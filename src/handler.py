@@ -22,7 +22,7 @@ async def handler(message: dict) -> None:
     )
 
     start_time_normal, end_time_normal = map(
-        lambda time: datetime.fromtimestamp(time).strftime("%H:%M:%S"),
+        lambda time: datetime.fromtimestamp(time + 60 * 60 * 3).strftime("%H:%M:%S"),
         (start_time, end_time),
     )
 
