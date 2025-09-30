@@ -10,7 +10,8 @@ class Settings(BaseSettings):
     RABBITMQ_PASSWORD: str
     RABBITMQ_HOST: str
     RABBITMQ_PORT: int
-    RABBITMQ_QUEUE: str
+
+    CHANNEL_ID: str
 
     @property
     def RABBITMQ_URL(self):

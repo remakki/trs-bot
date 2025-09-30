@@ -4,7 +4,7 @@ from faststream import FastStream
 from faststream.rabbit import RabbitBroker
 
 from src.config import settings
-from src.handler import router
+from src.handlers import router
 
 broker = RabbitBroker(settings.RABBITMQ_URL)
 app = FastStream(broker)
