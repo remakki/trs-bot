@@ -34,6 +34,7 @@ async def storyline_handler(storyline: Storyline) -> None:
 
     caption = (
         f"<b>Новость с канала {storyline.source.title}</b>\n\n"
+        f"<b>{storyline.title}</b>\n"
         f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
         f"<b>Summary</b>: {storyline.summary}\n\n"
         f"<tg-spoiler><b>Краткая выжимка</b>: "
