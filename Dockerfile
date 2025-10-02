@@ -10,4 +10,4 @@ RUN uv sync
 
 COPY . .
 
-CMD ["uv", "run", "python", "-m", "src.main"]
+CMD ["uv", "run", "faststream", "run", "src.main:app"]

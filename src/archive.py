@@ -3,7 +3,7 @@ import os
 import aiofiles
 import aiohttp
 
-from src.log import log
+from src import log
 
 
 async def get_video_from_archive(base_url: str, token: str, start_time: int, end_time: int) -> str:

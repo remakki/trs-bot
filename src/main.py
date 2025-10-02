@@ -1,19 +1,24 @@
-import asyncio
-
+import structlog
 from faststream import FastStream
 from faststream.rabbit import RabbitBroker
 
 from src.config import settings
-from src.handlers import router
+from src.logging import configure as configure_logging
+from src.subs import router
 
-broker = RabbitBroker(settings.RABBITMQ_URL)
-app = FastStream(broker)
+configure_logging()
+
+logger = structlog.get_logger('faststream')
+
+broker = RabbitBroker(
+    settings.RABBITMQ_URL,
+    log_level=20,
+    logger=logger,
+    log_fmt=None,
+)
+app = FastStream(
+    broker,
+    title="Notification Service",
+    version="0.0.1",
+)
 broker.include_router(router)
-
-
-async def main() -> None:
-    await app.run()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

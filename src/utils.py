@@ -1,6 +1,6 @@
 import os
 
-from src.log import log
+from src import log
 
 
 def delete_file(path: str) -> None:

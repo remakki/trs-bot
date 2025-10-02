@@ -23,6 +23,7 @@ class Storyline(BaseModel):
 
     source: Source
 
+
 class DigestTag(BaseModel):
     title: str
     quantity: int

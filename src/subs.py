@@ -5,13 +5,14 @@ from faststream.rabbit import RabbitQueue, RabbitRouter
 from src.archive import get_video_from_archive
 from src.bot import TGBot
 from src.config import settings
-from src.log import log
+from src import log
 from src.schemas import Digest, Storyline
 from src.utils import delete_file
 
 router = RabbitRouter()
 
-@router.subscriber(RabbitQueue(name='storyline_notification', durable=True))
+
+@router.subscriber(RabbitQueue(name="storyline_notification", durable=True))
 async def storyline_handler(storyline: Storyline) -> None:
     log.info(f"Received storyline: {storyline.model_dump()}")
 
@@ -48,15 +49,16 @@ async def storyline_handler(storyline: Storyline) -> None:
     log.info(f"Sent storyline notification: {caption}")
     delete_file(video_path)
 
-@router.subscriber(RabbitQueue(name='digest_notification', durable=True))
+
+@router.subscriber(RabbitQueue(name="digest_notification", durable=True))
 async def digest_handler(digest: Digest) -> None:
     log.info(f"Received digest: {digest.model_dump()}")
 
     caption = (
-        f"<b>Дайджест №{digest.id} от {digest.end_time.strftime("%d.%m.%Y")}</b>\n\n"
+        f"<b>Дайджест №{digest.id} от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
         f"<b>{digest.title}</b>\n\n"
         f"{digest.summary}\n\n"
-        f"{" ".join(f"#{tag.title} ({tag.quantity})" for tag in digest.tags)}"
+        f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags)}"
     )
 
     bot = TGBot()
