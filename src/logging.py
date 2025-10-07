@@ -104,7 +104,7 @@ class Logging(Generic[RendererType]):
 class Production(Logging[structlog.processors.JSONRenderer]):
     @classmethod
     def get_renderer(cls) -> structlog.processors.JSONRenderer:
-        return structlog.processors.JSONRenderer()
+        return structlog.processors.JSONRenderer(ensure_ascii=False)
 
 
 def configure() -> None:
