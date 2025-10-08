@@ -58,7 +58,7 @@ async def digest_handler(digest: Digest) -> None:
         f"<b>Дайджест №{digest.id} от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
         f"<b>{digest.title}</b>\n\n"
         f"{digest.summary}\n\n"
-        f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags)}"
+        f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags[:10])}"
     )
 
     bot = TGBot()
