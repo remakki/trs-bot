@@ -38,14 +38,15 @@ async def storyline_handler(storyline: Storyline) -> None:
         f"<b>{storyline.title}</b>\n"
         f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
         f"<b>Summary</b>: {storyline.summary}\n\n"
-        # f"<tg-spoiler><b>Краткая выжимка</b>: "
-        # f"{storyline.summary_ru}</tg-spoiler>\n\n"
+        f"<tg-spoiler><b>Краткая выжимка</b>: "
+        f"{storyline.summary_ru}</tg-spoiler>\n\n"
         f"<b>Temperature</b>: {storyline.temperature}\n\n"
         + " ".join(f"#{tag}" for tag in storyline.tags)
     )
 
     bot = TGBot()
-    await bot.send_video_from_file(settings.CHANNEL_ID, video_path, caption=caption)
+    await bot.send_video_from_file(settings.CHANNEL_ID, video_path)
+    await bot.send_message(settings.CHANNEL_ID, text=caption)
     log.info(f"Sent storyline notification: {caption}")
     delete_file(video_path)
 

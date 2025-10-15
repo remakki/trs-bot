@@ -16,6 +16,6 @@ class TGBot:
     async def send_message(self, chat_id: int | str, text: str) -> None:
         await self.bot.send_message(chat_id=chat_id, text=text)
 
-    async def send_video_from_file(self, chat_id: int | str, video_path: str, caption: str) -> None:
+    async def send_video_from_file(self, chat_id: int | str, video_path: str, caption: str | None = None) -> None:
         video = FSInputFile(video_path)
         await self.bot.send_video(chat_id=chat_id, video=video, caption=caption)
