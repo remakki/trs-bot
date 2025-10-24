@@ -39,7 +39,7 @@ async def storyline_handler(storyline: Storyline) -> None:
         f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
         f"<b>Summary</b>: {storyline.summary}\n\n"
         f"<blockquote expandable><b>Краткая выжимка</b>: "
-        f"{storyline.summary_ru}</blockquote>"
+        f"{storyline.summary_ru}</blockquote>\n\n"
         f"<b>Temperature</b>: {storyline.temperature}\n\n"
         + " ".join(f"#{tag}" for tag in storyline.tags)
     )
@@ -57,7 +57,8 @@ async def digest_handler(digest: Digest) -> None:
 
     caption = (
         f"<b>Дайджест №{digest.id} от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
-        f"<b>{digest.title}</b>\n\n"
+        f"<b>{digest.title}</b>\n"
+        f"({digest.start_time.strftime('%d.%m.%Y %H:%M')}-{digest.end_time.strftime('%d.%m.%Y %H:%M')})\n\n"
         f"{digest.summary}\n\n"
         f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags[:10])}"
     )
