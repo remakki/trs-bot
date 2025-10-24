@@ -1,3 +1,3 @@
 import structlog
 
-log = structlog.get_logger('trs-notification')
+log = structlog.get_logger("trs-notification")

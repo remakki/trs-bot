@@ -8,7 +8,7 @@ from src.subs import router
 
 configure_logging()
 
-logger = structlog.get_logger('faststream')
+logger = structlog.get_logger("faststream")
 
 broker = RabbitBroker(
     settings.RABBITMQ_URL,
