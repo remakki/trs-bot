@@ -55,10 +55,15 @@ async def storyline_handler(storyline: Storyline) -> None:
 async def digest_handler(digest: Digest) -> None:
     log.info(f"Received digest: {digest.model_dump()}")
 
+    start_time_normal, end_time_normal = map(
+        lambda dt: (dt + timedelta(hours=3)).strftime('%d.%m.%Y %H:%M'),
+        (digest.start_time, digest.end_time),
+    )
+
     caption = (
         f"<b>Дайджест №{digest.id} от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
         f"<b>{digest.title}</b>\n"
-        f"({digest.start_time.strftime('%d.%m.%Y %H:%M')}-{digest.end_time.strftime('%d.%m.%Y %H:%M')})\n\n"
+        f"({start_time_normal}-{end_time_normal})\n\n"
         f"{digest.summary}\n\n"
         f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags[:10])}"
     )
