@@ -44,7 +44,7 @@ async def storyline_handler(storyline: Storyline) -> None:
         + " ".join(f"#{tag}" for tag in storyline.tags)
     )
 
-    bot = TGBot(settings.CHANNEL_ID)
+    bot = TGBot(storyline.to_chat_id)
     await bot.send_video_from_file(video_path)
     await bot.send_message(caption)
     log.info(f"Sent storyline notification: {caption}")
@@ -68,6 +68,6 @@ async def digest_handler(digest: Digest) -> None:
         f"{' '.join(f'#{tag.title} ({tag.quantity})' for tag in digest.tags[:10])}"
     )
 
-    bot = TGBot(settings.CHANNEL_ID)
+    bot = TGBot(digest.to_chat_id)
     await bot.send_message(caption)
     log.info(f"Sent digest notification: {caption}")

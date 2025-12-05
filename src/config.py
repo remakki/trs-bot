@@ -12,8 +12,6 @@ class Settings(BaseSettings):
     RABBITMQ_HOST: str
     RABBITMQ_PORT: int
 
-    CHANNEL_ID: str
-
     @property
     def RABBITMQ_URL(self):
         return (

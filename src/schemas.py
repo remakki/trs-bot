@@ -18,6 +18,7 @@ class Storyline(BaseModel):
     temperature: str
     start_time: datetime
     end_time: datetime
+    to_chat_id: str
 
     tags: list[str]
 
@@ -37,5 +38,6 @@ class Digest(BaseModel):
     start_time: datetime
     end_time: datetime
     created_at: datetime | None = None
+    to_chat_id: str
 
     tags: list[DigestTag]
