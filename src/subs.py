@@ -37,10 +37,12 @@ async def storyline_handler(storyline: Storyline) -> None:
         f"<b>Новость с канала {storyline.source.title}</b>\n\n"
         f"<b>{storyline.title}</b>\n"
         f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
-        f"<b>Summary</b>: {storyline.summary}\n\n"
+        f"<b>Краткая выжимка</b>: {storyline.summary}\n\n"
+    ) + (
         f"<blockquote expandable><b>Краткая выжимка</b>: "
         f"{storyline.summary_ru}</blockquote>\n\n"
-        f"<b>Temperature</b>: {storyline.temperature}\n\n"
+    ) if storyline.summary_ru else "" + (
+        f"<b>Температура</b>: {storyline.temperature}\n\n"
         + " ".join(f"#{tag}" for tag in storyline.tags)
     )
 

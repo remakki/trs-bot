@@ -14,7 +14,7 @@ class Storyline(BaseModel):
     id: int
     title: str
     summary: str
-    summary_ru: str
+    summary_ru: str | None = None
     temperature: str
     start_time: datetime
     end_time: datetime
