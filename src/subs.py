@@ -57,7 +57,7 @@ async def storyline_handler(storyline: Storyline) -> None:
     bot = TGBot(storyline.to_chat_id)
     await bot.send_video_from_file(video_path)
     await bot.send_message(caption)
-    log.info(f"Sent storyline notification: {caption}")
+    log.info(f"Sent storyline notification", caption=caption, caption_length=len(caption))
     delete_file(video_path)
 
 
@@ -71,7 +71,7 @@ async def digest_handler(digest: Digest) -> None:
     )
 
     caption = (
-        f"<b>Дайджест №{digest.id} от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
+        f"<b>Дайджест от {digest.end_time.strftime('%d.%m.%Y')}</b>\n\n"
         f"<b>{digest.title}</b>\n"
         f"({start_time_normal}-{end_time_normal})\n\n"
         f"{digest.summary}\n\n"
