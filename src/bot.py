@@ -21,6 +21,16 @@ class TGBot:
         reraise=True,
     )
     async def send_message(self, text: str, chat_id: int | str | None = None) -> None:
+        if text_len := len(text) > 4096:
+            await self.bot.send_message(
+                chat_id=chat_id or self._chat_id,
+                text=text[: text_len // 2],
+            )
+            await self.bot.send_message(
+                chat_id=chat_id or self._chat_id,
+                text=text[text_len // 2 :],
+            )
+            return
         await self.bot.send_message(chat_id=chat_id or self._chat_id, text=text)
 
     @retry(
