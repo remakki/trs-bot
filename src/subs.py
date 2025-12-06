@@ -34,16 +34,24 @@ async def storyline_handler(storyline: Storyline) -> None:
     )
 
     caption = (
-        f"<b>Новость с канала {storyline.source.title}</b>\n\n"
-        f"<b>{storyline.title}</b>\n"
-        f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
-        f"<b>Краткая выжимка</b>: {storyline.summary}\n\n"
-    ) + (
-        f"<blockquote expandable><b>Краткая выжимка</b>: "
-        f"{storyline.summary_ru}</blockquote>\n\n"
-    ) if storyline.summary_ru else "" + (
-        f"<b>Температура</b>: {storyline.temperature}\n\n"
-        + " ".join(f"#{tag}" for tag in storyline.tags)
+        (
+            f"<b>Новость с канала {storyline.source.title}</b>\n\n"
+            f"<b>{storyline.title}</b>\n"
+            f"<a href='{url}'>{start_time_normal}-{end_time_normal}</a>\n\n"
+            f"<b>Краткая выжимка</b>: {storyline.summary}\n\n"
+        )
+        + (
+            (
+                f"<blockquote expandable><b>Краткая выжимка</b>: "
+                f"{storyline.summary_ru}</blockquote>\n\n"
+            )
+            if storyline.summary_ru
+            else ""
+        )
+        + (
+            f"<b>Температура</b>: {storyline.temperature}\n\n"
+            + " ".join(f"#{tag}" for tag in storyline.tags)
+        )
     )
 
     bot = TGBot(storyline.to_chat_id)
@@ -58,7 +66,7 @@ async def digest_handler(digest: Digest) -> None:
     log.info(f"Received digest: {digest.model_dump()}")
 
     start_time_normal, end_time_normal = map(
-        lambda dt: (dt + timedelta(hours=3)).strftime('%d.%m.%Y %H:%M'),
+        lambda dt: (dt + timedelta(hours=3)).strftime("%d.%m.%Y %H:%M"),
         (digest.start_time, digest.end_time),
     )
 
