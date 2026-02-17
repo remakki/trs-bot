@@ -2,10 +2,9 @@ from datetime import timedelta
 
 from faststream.rabbit import RabbitQueue, RabbitRouter
 
+from src import log
 from src.archive import get_video_from_archive
 from src.bot import TGBot
-from src.config import settings
-from src import log
 from src.schemas import Digest, Storyline
 from src.utils import delete_file
 
@@ -55,10 +54,15 @@ async def storyline_handler(storyline: Storyline) -> None:
     )
 
     bot = TGBot(storyline.to_chat_id)
-    await bot.send_video_from_file(video_path)
-    await bot.send_message(caption)
-    log.info(f"Sent storyline notification", caption=caption, caption_length=len(caption))
-    delete_file(video_path)
+    try:
+        await bot.send_video_from_file(video_path)
+        await bot.send_message(caption)
+    except Exception:
+        log.error(f"Failed to send storyline notification for storyline {storyline.id}")
+    else:
+        log.info("Sent storyline notification", caption=caption, caption_length=len(caption))
+    finally:
+        delete_file(video_path)
 
 
 @router.subscriber(RabbitQueue(name="digest_notification", durable=True))

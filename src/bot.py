@@ -6,14 +6,16 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 from src.config import settings
 
+_global_bot = Bot(
+    token=settings.BOT_TOKEN,
+    default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+)
+
 
 class TGBot:
     def __init__(self, chat_id: int | str):
         self._chat_id = chat_id
-        self.bot = Bot(
-            token=settings.BOT_TOKEN,
-            default=DefaultBotProperties(parse_mode=ParseMode.HTML),
-        )
+        self.bot = _global_bot
 
     @retry(
         stop=stop_after_attempt(3),
