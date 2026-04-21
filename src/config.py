@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     RABBITMQ_HOST: str
     RABBITMQ_PORT: int
 
+    PROXY_URL: str | None = None
+
     @property
     def RABBITMQ_URL(self):
         return (

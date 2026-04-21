@@ -3,11 +3,16 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.types import FSInputFile
 from tenacity import retry, stop_after_attempt, wait_exponential
+from aiogram.client.session.aiohttp import AiohttpSession
 
 from src.config import settings
 
+_session: AiohttpSession | None = AiohttpSession(
+    proxy=settings.PROXY_URL) if settings.PROXY_URL else None
+
 _global_bot = Bot(
     token=settings.BOT_TOKEN,
+    session=_session,
     default=DefaultBotProperties(parse_mode=ParseMode.HTML),
 )
 
@@ -30,7 +35,7 @@ class TGBot:
             )
             await self.bot.send_message(
                 chat_id=chat_id or self._chat_id,
-                text=text[text_len // 2 :],
+                text=text[text_len // 2:],
             )
             return
         await self.bot.send_message(chat_id=chat_id or self._chat_id, text=text)
