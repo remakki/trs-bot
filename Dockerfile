@@ -1,13 +1,10 @@
-FROM python:3.12-slim
-
-RUN pip install --no-cache-dir uv
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
 WORKDIR /app
 
-COPY uv.lock pyproject.toml ./
-
-RUN uv sync
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
 
 COPY . .
 
-CMD ["uv", "run", "faststream", "run", "src.main:app"]
+CMD ["uv", "run", "--no-dev", "faststream", "run", "src.main:app"]
